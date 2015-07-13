@@ -5,3 +5,6 @@ body { background #333 }
 h2 span, section h3 { display: none; }
 body                { font-size: xx-large; }
 footer, input       { font-size: large; }
+
+div#author > img { width: 100%; max-width: 90%; height: auto; }
+div#author > p { font-size: 35%; }

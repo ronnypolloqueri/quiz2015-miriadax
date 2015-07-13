@@ -7,3 +7,6 @@ section > div        { padding: 20px; }
 header, nav, section { background: #eee; text-align: center }
 footer               { background: #eee; text-align: center }
 nav span             { margin: 0px 10px 0px 0px; }
+
+div#author           { width: 100%; margin: 0 auto; color: #444; font-size: 150% }
+div#author > img     { width: 100%; max-width: 25%; height: auto; border-radius: 800px; }
