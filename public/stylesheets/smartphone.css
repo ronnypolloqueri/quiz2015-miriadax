@@ -2,9 +2,11 @@ body { background #333 }
 
 #page-wrap:after { content: "Smarphone Layout" }
 
-h2 span, section h3 { display: none; }
+h2 span, section h3, label.rem 
+                    { display: none; }
 body                { font-size: xx-large; }
-footer, input       { font-size: large; }
+input, button       { font-size: x-large; }
+footer              { font-size: large; }
 
 div#author > img { width: 100%; max-width: 90%; height: auto; }
 div#author > p { font-size: 35%; }

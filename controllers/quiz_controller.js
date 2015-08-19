@@ -51,3 +51,22 @@ exports.answer = function(req, res) {
     }
   });
 };
+
+// GET /quizes/new
+exports.new = function(req, res) {
+  var quiz = models.Quiz.build( // crea objeto quiz
+      { pregunta: "Pregunta", respuesta: "Respuesta" }
+  );
+
+  res.render('quizes/new', { quiz: quiz });
+};
+
+// guarda en la DB los campos pregunta y respuesta de quiz
+exports.create = function(req, res) {
+     var quiz = models.Quiz.build( req.body.quiz );
+     // !!! Fields  nos permitira filtrar 
+     //     añadidos por hackers
+     quiz.save({fields: ["pregunta", "respuesta"]}).then( function(){
+         res.redirect('/quizes');
+     }); // Redirección HTTP (URL relativo) Lista de preguntas
+ };
