@@ -33,9 +33,9 @@ var Quiz = sequelize.import(quiz_path);
 exports.Quiz = Quiz; // exportar definicion de la tabla Quiz
 
 // sequelize.sync() crea e inicializa tabla de preguntas en BD
-sequelize.sync().success(function() {
+sequelize.sync().then(function() {
     // sucess(..) ejecuta el manejador una vez creada la tabla
-    Quiz.count().success(function(count) {
+    Quiz.count().then(function(count) {
         if(count === 0) {
             Quiz.bulkCreate( 
               [ {pregunta: 'Capital de Italia',   respuesta: 'Roma'},
