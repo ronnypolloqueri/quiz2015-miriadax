@@ -2,5 +2,14 @@
 <input type="text" name="quiz[pregunta]" id="preg" value="<%= quiz.pregunta %>" /><p>
 <label for="resp" class="rem">Respuesta:</label>
 <input type="text" name="quiz[respuesta]" id="resp" value="<%= quiz.respuesta %>" /><p>
+<label for="tema" class="rem">Tema:</label>
+<% temas = { ciencias: 'Ciencias', geografia: 'Geografía', humanidades: 'Humanidades', 
+             tecnologia: 'Tecnología', ocio: 'Ocio', otro: 'Otro' } %>
+<select name="quiz[tema]" id="tema">
+    <option value="">Seleccione Tema</option>
+<% Object.keys( temas ).forEach( function(key) { %>
+    <option value="<%=key%>" <%= key === quiz.tema ? 'selected' : ''%>><%= temas[key]%></option>
+<% }) // end forEach%>
+</select><p>  
 <a href="/quizes"><button type="button">Cancelar</button></a>
 <input type="submit" value="Salvar">

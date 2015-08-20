@@ -16,16 +16,26 @@ exports.load = function(req, res, next, quizId) {
 
 // GET /quizes
 exports.index = function(req, res) {
-  if (req.query.search === undefined){
-    models.Quiz.findAll().then(function(quizes) {
-        res.render('quizes/index.ejs', { quizes: quizes});
-      }
-    ).catch(function(error) { next(error);});
-  } else {
-    models.Quiz.findAll( {
+  if (req.query.search !== undefined){      // Preguntas por búsqueda
+    models.Quiz.findAll( { 
         where: ["pregunta like ?", "%" + req.query.search + "%"]
       } 
     ).then(function(quizes) {
+        var msg = (quizes.length === 0 ? 'No hay preguntas que coincidan con su búsqueda.':'');
+        res.render('quizes/index.ejs', { quizes: quizes, msg: msg});
+      }
+    ).catch(function(error) { next(error);});
+  } else if (req.query.tema !== undefined){ // Preguntas de un tema específico
+    models.Quiz.findAll( {
+        where: ["tema = ?", req.query.tema ]
+      } 
+    ).then(function(quizes) {
+        var msg = (quizes.length === 0 ? 'No hay preguntas para el tema seleccionado.':'');
+        res.render('quizes/index.ejs', { quizes: quizes, msg: msg});
+      }
+    ).catch(function(error) { next(error);});
+  } else {                                  // Muestra todas las preguntas
+    models.Quiz.findAll().then(function(quizes) {
         res.render('quizes/index.ejs', { quizes: quizes});
       }
     ).catch(function(error) { next(error);});
@@ -74,7 +84,7 @@ exports.create = function(req, res) {
         res.render('quizes/new', {quiz: quiz, errors: err.errors });
       } else {
         quiz // save: guarda en DB campos pregunta y respuesta de quiz
-        .save({ fields: ["pregunta", "respuesta"] })
+        .save({ fields: ["pregunta", "respuesta", "tema"] })
                // fields: permitira filtrar añadidos por hackers
         .then( function(){ res.redirect('/quizes'); }); 
                // res: Redirección HTTP (URL relativo) Lista de preguntas
@@ -94,6 +104,7 @@ exports.edit = function(req, res) {
 exports.update = function(req, res) {
   req.quiz.pregunta  = req.body.quiz.pregunta;
   req.quiz.respuesta = req.body.quiz.respuesta;
+  req.quiz.tema      = req.body.quiz.tema;
 
   req.quiz
   .validate()
@@ -103,7 +114,7 @@ exports.update = function(req, res) {
         res.render('quizes/edit', {quiz: req.quiz});
       } else {
           req.quiz  // save: guarda  cmapos pregunta y respuesta en BD
-          .save( {fields: ["pregunta", "respuesta"]} )
+          .save({ fields: ["pregunta", "respuesta", "tema"] })
           .then( function(){ res.redirect('/quizes'); });
                  // Redirección HTTP a lista de preguntas (URL relativo)
       } // if-else

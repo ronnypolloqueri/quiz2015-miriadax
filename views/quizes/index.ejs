@@ -1,9 +1,24 @@
+<% temas = { ciencias: 'Ciencias', geografia: 'Geografía', humanidades: 'Humanidades', 
+             tecnologia: 'Tecnología', ocio: 'Ocio', otro: 'Otro' } %>
+<div id="menu_temas">
+    <ul id="menu">
+        <li><a href="/quizes">Todos</a></li>
+    <% Object.keys( temas ).forEach( function(key) { %>
+        <li><a href="/quizes?tema=<%= key %>"><%= temas[key] %></a></li>
+    <% }) // end forEach%>
+    </ul>
+</div>
 <div id="busqueda">
     <form action="/quizes" method="get">
         <input type="search" name="search" id="search" value="Ingrese el texto a buscar" />
         <input type="submit" value="Buscar">
     </form>
 </div>
+
+<% if( locals.msg !== undefined ) {%>
+    <span id="msg"><%= msg %></span>
+<% } // if %>
+
 <table>
 <% var i; for (i=0; i < quizes.length; i++) { %>        
     <tr>
