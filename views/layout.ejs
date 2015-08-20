@@ -25,7 +25,7 @@
         </nav>
 
         <section class="main" id="s1">
-            <% if ( (typeof errors !== undefined) && errors.length) { %>
+            <% if ( (locals.errors !== undefined) && errors.length) { %>
             <span id='ErrorMsgs'>
                 Corregir Errores:<br/>
                 <% for (var i in errors) { %>
